@@ -1,6 +1,5 @@
 <html>
   <head>
-    <link rel="stylesheet" href="style.css">
     <title>Available offers</title>
   </head>
   <body>
@@ -13,6 +12,16 @@
       </ul>
     </nav>
     <hr>
+    <?php
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "quizdb";
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    if($conn->connect_error){
+      die("Connection failed: " . $conn->connect_error);
+    }
+    ?>
     <table>
       <tr>
         <th colspan="6">Available offers</th>
@@ -27,7 +36,14 @@
       </tr>
       <tr>
         <td>date placeholder</td>
-        <td>source location</td>
+        <td><?php
+          $sql = "select source from availableoffers";
+          $result = $conn ->query($sql);
+          if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+              echo $row["source"];
+            }}
+          ?></td>
         <td>target location</td>
         <td>driver name</td>
         <td>average rating</td>
